@@ -14,6 +14,10 @@ import { indexRoutes } from "./http/routes/index.js";
 import { aboutRoutes } from "./http/routes/about.js";
 
 import { logger } from "./utils/logger.js";
+import { connectDatabase } from "./database/connect.js";
+import { licenseRoutes } from "./http/routes/license.js";
+
+await connectDatabase();
 
 const app = new Elysia({ name: "PluginsX API", adapter: node() })
   .use(
@@ -50,6 +54,10 @@ const app = new Elysia({ name: "PluginsX API", adapter: node() })
           //   name: "Auth system",
           //   description: "System authentication for users in routes",
           // },
+          {
+            name: "License",
+            description: "License related routes",
+          },
         ],
       },
     }),
@@ -60,6 +68,7 @@ const app = new Elysia({ name: "PluginsX API", adapter: node() })
   .use(indexRoutes)
   // .use(userRoutes)
   .use(aboutRoutes)
+  .use(licenseRoutes)
 
   .listen(
     {
